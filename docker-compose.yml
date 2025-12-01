@@ -10,7 +10,7 @@ services:
       APP_DEBUG: "true"
       SPEEDTEST_SCHEDULE: "24 */6 * * *"
     volumes:
-      - $HOME/speedtest/config:/config
+      - ./data/speedtest:/config
     ports:
       - 8085:80
       - 8443:443
@@ -27,6 +27,6 @@ services:
     ports:
       - 80:3000
     volumes:
-      - $HOMEPAGE_CONFIG_DIR:/app/config
+      - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
