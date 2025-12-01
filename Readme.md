@@ -1,34 +1,45 @@
-# adler: docker-compose
+# Docker Homepage
 
-This folder contains a docker compose file with all services currently running on ADLER.
+A Docker Compose setup combining [Homepage](https://gethomepage.dev) dashboard with Speedtest Tracker.
 
-It is required to create a `.env` file containing a few properties and a convenience script is here for, well, convenience in getting it all running as best I can.
+## Services
 
-## services
+- **Homepage** - A modern, fully static, fast, secure fully proxied, highly customizable application dashboard
+  - [GitHub](https://github.com/gethomepage/homepage) | [Docs](https://gethomepage.dev/latest/widgets/)
+  - Accessible at http://localhost
+- **Speedtest Tracker** - A self-hosted internet performance tracking application
+  - [GitHub](https://github.com/alexjustesen/speedtest-tracker) | [Docs](https://docs.speedtest-tracker.dev/)
+  - Accessible at http://localhost:8085
 
-- homepage [git](https://github.com/gethomepage/homepage), [docs](https://gethomepage.dev/latest/widgets/)
-- speedtest-tracker [git](https://github.com/alexjustesen/speedtest-tracker), [docs](https://docs.speedtest-tracker.dev/)
-- [gluetun]
-- [qbittorrent]
+## Setup
 
-## .env file
+1. Copy example files:
+   ```bash
+   cp .env.example .env
+   cp homepage.secrets.example homepage.secrets
+   ```
 
-Requires the following exports:
-```
-# generate a key from https://speedtest-tracker.dev/
-SPEEDTEST_TRACK_APP_KEY="base64:abcdef..."
-# wireguard gubbins
-WIREGUARD_PRIVATE_KEY="..."
-# these can be acquired from MullvadVPN's website. when you import or create 
-#  a private key you have the option to generate a config file. extract the 
-#  IPs from there
-WIREGUARD_ADDRESSES="..."
-```
+2. Edit `.env` and `homepage.secrets` with your values:
+   - Generate speedtest app key from https://speedtest-tracker.dev/
+   - Add your API keys and credentials to homepage.secrets
 
-## Quickstart: Speedtest
+3. Start services:
+   ```bash
+   docker compose up -d
+   ```
 
-- Navigate to http://adler.local:8085/admin
-- Log in with credentials. [Defaults](https://docs.speedtest-tracker.dev/security/authentication) are:
-    - admin@example.com
-    - password
+## Configuration
 
+Homepage configuration files are in the `config/` directory:
+- `services.yaml` - Service definitions and widgets
+- `bookmarks.yaml` - Bookmark links
+- `widgets.yaml` - Dashboard widgets
+- `settings.yaml` - General settings
+
+## Speedtest Tracker Setup
+
+1. Navigate to http://localhost:8085/admin
+2. Login with default credentials:
+   - Email: admin@example.com
+   - Password: password
+3. Change default credentials immediately
