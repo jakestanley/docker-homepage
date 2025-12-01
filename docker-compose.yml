@@ -1,0 +1,32 @@
+services:
+
+  speedtest:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    environment:
+      PUID: $PID
+      PGID: $GID
+      APP_KEY: $SPEEDTEST_TRACK_APP_KEY
+      DB_CONNECTION: sqlite
+      APP_DEBUG: "true"
+      SPEEDTEST_SCHEDULE: "24 */6 * * *"
+    volumes:
+      - $HOME/speedtest/config:/config
+    ports:
+      - 8085:80
+      - 8443:443
+    restart: unless-stopped
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    env_file: homepage.secrets
+    environment:
+      PUID: $PID
+      PGID: $GID
+      HOMEPAGE_ALLOWED_HOSTS: adler.local,adler.local:80,192.168.1.6
+    ports:
+      - 80:3000
+    volumes:
+      - $HOMEPAGE_CONFIG_DIR:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped

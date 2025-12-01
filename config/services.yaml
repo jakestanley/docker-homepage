@@ -1,0 +1,109 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Row 1:
+  - System Health:
+    - Speedtest:
+        icon: speedtest-tracker.png
+        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:8085/admin"
+        widget:
+          type: speedtest
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:8085"
+    - Processes:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:61208"
+          metric: process
+          chart: true
+#    - Memory:
+#        widget:
+#          type: glances
+#          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:61208"
+#          metric: memory
+#          chart: true
+    - Info:
+        widget:
+          type: glances
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:61208"
+          metric: info
+          chart: true
+
+  - Services:
+    - Qbittorrent:
+        icon: qbittorrent.png
+        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:8090"
+        widget:
+          type: qbittorrent
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:8090"
+          username: admin
+          password: {{HOMEPAGE_VAR_QBT_PASSWORD}}
+    - Plex:
+        icon: plex.png
+        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:32400/web"
+        description: Watch movies and TV shows.
+        server: localhost
+        widget:
+          type: plex
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:32400"
+          key: {{HOMEPAGE_VAR_PLEX_KEY}}
+          fields: ["streams", "movies", "tv"]
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://{{HOMEPAGE_VAR_ADDRESS}}:8096/web/index.html
+        description: Manage videos
+        widget:
+          type: jellyfin
+          url: http://{{HOMEPAGE_VAR_ADDRESS}}:8096
+          key: {{HOMEPAGE_VAR_JELLYFIN_API_KEY}}
+          fields: ["movies"]
+    - Bots:
+        widget:
+          type: customapi
+          url: http://{{HOMEPAGE_VAR_ADDRESS}}:5000/health
+          refreshInterval: 30000
+          method: GET
+          mappings:
+            - field: status
+              label: Status
+              format: text
+
+  - Game Servers:
+    # Currently broken
+    #    - CS2:
+    #        icon: https://icon-library.com/images/counter-strike-icon/counter-strike-icon-24.jpg
+    #        widget:
+    #          type: gamedig
+    #          serverType: counterstrike2 # see https://github.com/gamedig/node-gamedig/blob/master/GAMES_LIST.md
+    #          url: "udp://{{HOMEPAGE_VAR_ADDRESS}}:27015"
+    #          socketTimeout: 10000
+
+    - Minecraft:
+        icon: https://upload.wikimedia.org/wikipedia/commons/9/91/Logo_Minecraft.png
+        href: http://{{HOMEPAGE_VAR_ADDRESS}}:3000
+        widget:
+          type: gamedig
+          serverType: minecraft
+          url: "udp://{{HOMEPAGE_VAR_ADDRESS}}:25565"
+          fields: ["players", "status", "ping"]
+            #    - "Insurgency: Sandstorm":
+            #        widget:
+            #          type: gamedig
+            #          serverType: insurgencysandstorm
+            #          url: "udp://{{HOMEPAGE_VAR_ADDRESS}}:27013"
+            #
+            #
+
+- Control Panels:
+  - AMP:
+      icon: https://pbs.twimg.com/profile_images/1261021896843411461/voBCBPHQ_400x400.jpg
+      href: "http://{{HOMEPAGE_VAR_ADDRESS}}:8080"
+      description: Application Management Panel
+  - Portainer:
+      icon: portainer.png
+      description: GUI for Docker containers
+      href: "http://{{HOMEPAGE_VAR_ADDRESS}}:9001"
+  - UpSnap:
+      icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
+      href: http://{{HOMEPAGE_VAR_ADDRESS}}:5001
+      description: Sleep and wake computers
