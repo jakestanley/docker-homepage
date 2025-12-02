@@ -1,0 +1,14 @@
+[Unit]
+Description=Dropbox Status API
+After=network.target
+
+[Service]
+Type=simple
+User=jake
+Environment=PATH=/home/jake/.dropbox-dist:/usr/local/bin:/usr/bin:/bin
+WorkingDirectory=/home/jake/git/github.com/jakestanley/docker-homepage/dropbox-status
+ExecStart=/home/jake/git/github.com/jakestanley/docker-homepage/dropbox-status/venv/bin/python app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -67,6 +67,16 @@
             - field: status
               label: Status
               format: text
+    - Dropbox:
+        widget:
+          type: customapi
+          url: http://{{HOMEPAGE_VAR_ADDRESS}}:8006/status
+          refreshInterval: 30000
+          method: GET
+          mappings:
+            - field: status
+              label: Status
+              format: text
 
   - Game Servers:
     # Currently broken
