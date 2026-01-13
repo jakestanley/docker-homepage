@@ -6,7 +6,7 @@ A Docker Compose setup combining [Homepage](https://gethomepage.dev) dashboard w
 
 - **Homepage** - A modern, fully static, fast, secure fully proxied, highly customizable application dashboard
   - [GitHub](https://github.com/gethomepage/homepage) | [Docs](https://gethomepage.dev/latest/widgets/)
-  - Accessible at http://localhost
+  - Accessible at http://localhost (port configurable via `HOMEPAGE_HOST_PORT`, default `80`)
 - **Speedtest Tracker** - A self-hosted internet performance tracking application
   - [GitHub](https://github.com/alexjustesen/speedtest-tracker) | [Docs](https://docs.speedtest-tracker.dev/)
   - Accessible at http://localhost:8085
@@ -22,6 +22,7 @@ A Docker Compose setup combining [Homepage](https://gethomepage.dev) dashboard w
 2. Edit `.env` and `homepage.secrets` with your values:
    - Generate speedtest app key from https://speedtest-tracker.dev/
    - Add your API keys and credentials to homepage.secrets
+   - Optional: set `HOMEPAGE_HOST_PORT` (if changed, access Homepage at `http://localhost:<port>`)
 
 3. Start services:
    ```bash
