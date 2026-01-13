@@ -6,7 +6,7 @@
   - System Health:
     - Speedtest:
         icon: speedtest-tracker.png
-        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:8085/admin"
+        href: "http://speedtest.stanley.arpa/admin"
         widget:
           type: speedtest
           url: "http://{{HOMEPAGE_VAR_ADDRESS}}:8085"
@@ -32,7 +32,7 @@
   - Services:
     - Qbittorrent:
         icon: qbittorrent.png
-        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:8090"
+        href: "https://torrents.stanley.arpa"
         widget:
           type: qbittorrent
           url: "http://{{HOMEPAGE_VAR_ADDRESS}}:8090"
@@ -40,7 +40,7 @@
           password: {{HOMEPAGE_VAR_QBT_PASSWORD}}
     - Plex:
         icon: plex.png
-        href: "http://{{HOMEPAGE_VAR_ADDRESS}}:32400/web"
+        href: "https://plex.stanley.arpa/web"
         description: Watch movies and TV shows.
         server: localhost
         widget:
@@ -50,7 +50,7 @@
           fields: ["streams", "movies", "tv"]
     - Jellyfin:
         icon: jellyfin.png
-        href: http://{{HOMEPAGE_VAR_ADDRESS}}:8096/web/index.html
+        href: https://jellyfin.stanley.arpa/web/index.html
         description: Manage videos
         widget:
           type: jellyfin
@@ -90,7 +90,7 @@
 
     - Minecraft:
         icon: https://upload.wikimedia.org/wikipedia/commons/9/91/Logo_Minecraft.png
-        href: http://{{HOMEPAGE_VAR_ADDRESS}}:3000
+        href: https://minecraft.stanley.arpa
         widget:
           type: gamedig
           serverType: minecraft
@@ -108,8 +108,8 @@
   - Portainer:
       icon: portainer.png
       description: GUI for Docker containers
-      href: "http://{{HOMEPAGE_VAR_ADDRESS}}:9001"
+      href: "https://portainer.stanley.arpa"
   - UpSnap:
       icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
-      href: http://{{HOMEPAGE_VAR_ADDRESS}}:5001
+      href: https://upsnap.stanley.arpa
       description: Sleep and wake computers
