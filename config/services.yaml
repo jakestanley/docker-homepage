@@ -113,7 +113,3 @@
       icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
       href: http://{{HOMEPAGE_VAR_ADDRESS}}:5001
       description: Sleep and wake computers
-  - Pi-hole:
-      icon: https://upload.wikimedia.org/wikipedia/en/thumb/1/15/Pi-hole_vector_logo.svg/960px-Pi-hole_vector_logo.svg.png
-      href: http://{{HOMEPAGE_VAR_ADDRESS}}:8087/admin
-      description: DNS gubbins
