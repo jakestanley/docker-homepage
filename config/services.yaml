@@ -113,3 +113,7 @@
       icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
       href: https://upsnap.stanley.arpa
       description: Sleep and wake computers
+  - Directory:
+      icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/2560px-Nginx_logo.svg.png
+      href: https://directory.stanley.arpa
+      description: All host and service mappings from dnsmasq/nginx
