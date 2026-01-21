@@ -1,0 +1,75 @@
+You are migrating the "homepage" service to the homelab port/DNS control-plane pattern.
+
+Known working pattern (from prior migrations):
+- `homelab-infra/registry.yaml` is authoritative for DNS names, host placement, and host-exposed ports.
+- `homelab-edge` renders/applies dnsmasq + nginx from that registry.
+- Each application service runs in its own repository (compose + app code), binds to the host port allocated in registry.yaml, and is reached via nginx + TLS.
+
+Goal:
+Migrate "homepage" so it is a normal service:
+- host-exposed port MUST match `services.homepage.upstream.port` in `../homelab-infra/registry.yaml` (expected to be 20017)
+- service DNS is `home.stanley.arpa`
+- nginx proxies to `http://<adler_ip>:<registry_port>` and clients use `https://home.stanley.arpa`
+
+Constraints:
+- Keep changes minimal and follow existing conventions in THIS repository.
+- Do NOT create new tooling conventions (no new frameworks; don’t add Poetry if not used, etc).
+- Do NOT duplicate `registry.yaml` in this repo.
+- Do NOT use git submodules.
+- Prefer to mount or reference `../homelab-infra/registry.yaml` for any derived config.
+- Avoid binding the service port to 127.0.0.1 only; it must be reachable on the host LAN IP because nginx upstream uses host IPs.
+
+Authoritative registry schema (relevant):
+services.homepage:
+  dns: home.stanley.arpa
+  proxy_host: adler
+  upstream:
+    host: adler
+    port: 20017
+    scheme: http
+
+Tasks:
+
+1) Ensure registry entry exists and matches expectation
+- If you can access ../homelab-infra/registry.yaml at runtime, verify that `services.homepage` exists with:
+  - dns: home.stanley.arpa
+  - upstream.port: 20017
+  - upstream.host: adler
+  - scheme: http
+- If not present, print clear instructions for the user to add it (do not guess).
+
+2) Update this repo's runtime to bind the correct host port
+- If homepage runs under Docker Compose:
+  - Update docker-compose.yml so that the HOST port equals `services.homepage.upstream.port` from the registry (20017).
+  - Keep the container internal port unchanged.
+  - Ensure the port mapping is NOT restricted to 127.0.0.1 (do not use 127.0.0.1:HOST:CONTAINER).
+- If homepage is not Docker Compose:
+  - Update its listen port to 20017 and ensure it binds on 0.0.0.0 or the LAN IP, not loopback-only.
+
+3) Optional but preferred: derive host port from registry automatically
+- If it can be done with minimal change and existing tooling:
+  - Add a small script (under scripts/) that reads `services.homepage.upstream.port` from `../homelab-infra/registry.yaml`
+  - Exports it as an env var used by docker compose (e.g. HOMEPAGE_HOST_PORT)
+- If this repo already uses a similar pattern (like env-from-registry), reuse it.
+- If adding this would cause big changes, it is acceptable to hardcode 20017 in compose for now, but document that it is allocated by homelab-infra.
+
+4) Update README.md for the homepage repo
+- State that the host port is allocated in `homelab-infra/registry.yaml` and must not drift.
+- Provide run instructions, preferably a single canonical command.
+- Do NOT mention editing DNS/nginx here (those are handled by homelab-edge).
+
+5) Verification steps (documented)
+- Add a short section (README or scripts/verify.sh) showing:
+  - curl to upstream locally: `curl -I http://10.92.8.6:20017/` (or localhost if you prefer but ensure correct bind)
+  - curl to public service via nginx: `curl -kI https://home.stanley.arpa/`
+
+Acceptance criteria:
+- `docker ps` shows homepage running.
+- `ss -lntp` on adler shows LISTEN on :20017 (not only 127.0.0.1).
+- `curl -I http://10.92.8.6:20017/` returns a response (any 2xx/3xx is fine).
+- `curl -kI https://home.stanley.arpa/healthz` returns 200 (nginx).
+- `curl -kI https://home.stanley.arpa/` does not return 502.
+
+Important:
+This migration is only about aligning the service bind port and docs. Do not redesign the service.
+Keep changes minimal.

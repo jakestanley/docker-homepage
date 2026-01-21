@@ -2,14 +2,20 @@
 
 A Docker Compose setup combining [Homepage](https://gethomepage.dev) dashboard with Speedtest Tracker.
 
+This repo follows the homelab control-plane pattern: host ports and DNS names are allocated in `../homelab-infra/registry.yaml` and must not drift.
+
+Internal TLS is not exposed from these containers; the edge proxy (nginx) terminates TLS and proxies to the upstream HTTP ports.
+
 ## Services
 
 - **Homepage** - A modern, fully static, fast, secure fully proxied, highly customizable application dashboard
   - [GitHub](https://github.com/gethomepage/homepage) | [Docs](https://gethomepage.dev/latest/widgets/)
-  - Accessible at http://localhost (port configurable via `HOMEPAGE_HOST_PORT`, default `80`)
+  - Upstream: `http://<adler_ip>:20017/` (host port from `services.homepage.upstream.port`)
+  - Public: `https://home.stanley.arpa/` (edge proxy handles DNS/TLS)
 - **Speedtest Tracker** - A self-hosted internet performance tracking application
   - [GitHub](https://github.com/alexjustesen/speedtest-tracker) | [Docs](https://docs.speedtest-tracker.dev/)
-  - Accessible at http://localhost:8085
+  - Upstream: `http://<adler_ip>:20016/` (host port from `services.speedtest.upstream.port`)
+  - Public: `https://speedtest.stanley.arpa/` (edge proxy handles DNS/TLS)
 
 ## Setup
 
@@ -22,11 +28,12 @@ A Docker Compose setup combining [Homepage](https://gethomepage.dev) dashboard w
 2. Edit `.env` and `homepage.secrets` with your values:
    - Generate speedtest app key from https://speedtest-tracker.dev/
    - Add your API keys and credentials to homepage.secrets
-   - Optional: set `HOMEPAGE_HOST_PORT` (if changed, access Homepage at `http://localhost:<port>`)
+   - Keep `HOMEPAGE_HOST_PORT` aligned to `../homelab-infra/registry.yaml` (`services.homepage.upstream.port`)
+   - Ensure `HOMEPAGE_ALLOWED_HOSTS` includes `home.stanley.arpa`
 
 3. Start services:
    ```bash
-   docker compose up -d
+   ./scripts/up.sh
    ```
 
 ## Configuration
@@ -36,6 +43,19 @@ Homepage configuration files are in the `config/` directory:
 - `bookmarks.yaml` - Bookmark links
 - `widgets.yaml` - Dashboard widgets
 - `settings.yaml` - General settings
+
+## Verification
+
+```bash
+curl -I http://10.92.8.6:20017/
+curl -kI https://home.stanley.arpa/healthz
+curl -kI https://home.stanley.arpa/
+```
+
+Or:
+```bash
+bash ./scripts/verify.sh
+```
 
 ## Speedtest Tracker Setup
 

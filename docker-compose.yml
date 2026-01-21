@@ -12,8 +12,8 @@ services:
     volumes:
       - ./data/speedtest:/config
     ports:
-      - 8085:80
-      - 8443:443
+      # Host port is allocated by homelab-infra/registry.yaml (services.speedtest.upstream.port)
+      - "${SPEEDTEST_HOST_PORT:-20016}:80"
     restart: unless-stopped
 
   homepage:
@@ -25,7 +25,8 @@ services:
       PGID: $GID
       HOMEPAGE_ALLOWED_HOSTS: $HOMEPAGE_ALLOWED_HOSTS
     ports:
-      - "${HOMEPAGE_HOST_PORT:-80}:3000"
+      # Host port is allocated by homelab-infra/registry.yaml (services.homepage.upstream.port)
+      - "${HOMEPAGE_HOST_PORT:-20017}:3000"
     volumes:
       - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
