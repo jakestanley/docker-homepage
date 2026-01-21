@@ -29,7 +29,7 @@ Internal TLS is not exposed from these containers; the edge proxy (nginx) termin
    - Generate speedtest app key from https://speedtest-tracker.dev/
    - Add your API keys and credentials to homepage.secrets
    - Keep `HOMEPAGE_HOST_PORT` aligned to `../homelab-infra/registry.yaml` (`services.homepage.upstream.port`)
-   - Ensure `HOMEPAGE_ALLOWED_HOSTS` includes `home.stanley.arpa`
+   - `./scripts/up.sh` exports `HOMEPAGE_ALLOWED_HOSTS` automatically (from registry DNS); optionally set `ADLER_IP` to also allow the LAN IP
 
 3. Start services:
    ```bash

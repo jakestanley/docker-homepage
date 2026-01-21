@@ -3,6 +3,7 @@ set -euo pipefail
 
 format="export"
 registry_path=""
+adler_ip="${ADLER_IP:-}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -14,14 +15,18 @@ while [[ $# -gt 0 ]]; do
       registry_path="${2:-}"
       shift 2
       ;;
+    --adler-ip)
+      adler_ip="${2:-}"
+      shift 2
+      ;;
     -h|--help)
       cat <<'EOF'
-Usage: registry-homepage-env.sh [--registry PATH] [--format export|env]
+Usage: registry-homepage-env.sh [--registry PATH] [--format export|env] [--adler-ip IP]
 
-Reads services.homepage from ../homelab-infra/registry.yaml and prints HOMEPAGE_HOST_PORT.
+Reads services.homepage from ../homelab-infra/registry.yaml and prints HOMEPAGE_HOST_PORT and HOMEPAGE_ALLOWED_HOSTS.
 
 Examples:
-  eval "$(./scripts/registry-homepage-env.sh)"        # exports HOMEPAGE_HOST_PORT in current shell
+  eval "$(./scripts/registry-homepage-env.sh)"        # exports vars in current shell
   ./scripts/registry-homepage-env.sh --format env     # prints KEY=VALUE lines
 EOF
       exit 0
@@ -190,3 +195,46 @@ case "$format" in
     ;;
 esac
 
+allowed_hosts=(
+  "$dns"
+  "${dns}:443"
+  localhost
+  "127.0.0.1"
+)
+
+if [[ -n "$adler_ip" ]]; then
+  allowed_hosts+=("$adler_ip" "${adler_ip}:${upstream_port}")
+fi
+
+if [[ -n "${HOMEPAGE_ALLOWED_HOSTS_EXTRA:-}" ]]; then
+  IFS=',' read -r -a extra_hosts <<<"${HOMEPAGE_ALLOWED_HOSTS_EXTRA}"
+  for h in "${extra_hosts[@]}"; do
+    h="${h#"${h%%[![:space:]]*}"}"
+    h="${h%"${h##*[![:space:]]}"}"
+    [[ -n "$h" ]] && allowed_hosts+=("$h")
+  done
+fi
+
+allowed_hosts_csv="$(
+  printf '%s\n' "${allowed_hosts[@]}" | awk '
+    BEGIN { FS="\n" }
+    {
+      gsub(/^[ \t]+|[ \t]+$/, "", $0)
+      if ($0 != "" && !seen[$0]++) out = out (out=="" ? "" : ",") $0
+    }
+    END { print out }
+  '
+)"
+
+case "$format" in
+  export)
+    printf "export HOMEPAGE_ALLOWED_HOSTS=%q\n" "$allowed_hosts_csv"
+    ;;
+  env)
+    printf "HOMEPAGE_ALLOWED_HOSTS=%s\n" "$allowed_hosts_csv"
+    ;;
+  *)
+    echo "Invalid --format: $format (expected export|env)" >&2
+    exit 2
+    ;;
+esac
