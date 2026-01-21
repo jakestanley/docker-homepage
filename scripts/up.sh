@@ -16,5 +16,6 @@ fi
 
 eval "$(./scripts/registry-homepage-env.sh)"
 eval "$(./scripts/registry-speedtest-env.sh)"
+eval "$(./scripts/registry-jellyfin-env.sh)"
 
 docker compose up -d "$@"

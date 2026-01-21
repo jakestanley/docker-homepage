@@ -37,6 +37,7 @@ WIREGUARD_PRIVATE_KEY="..."
 #  a private key you have the option to generate a config file. extract the 
 #  IPs from there
 WIREGUARD_ADDRESSES="..."
+# widget ports can also be derived from your registry.yaml when starting via ./scripts/up.sh
 ```
 
 ## Quickstart: Speedtest

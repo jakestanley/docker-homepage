@@ -27,6 +27,7 @@ Internal TLS is not exposed from these containers; the edge proxy (nginx) termin
 2. Edit `.env` with your values:
    - Generate Speedtest Tracker `APP_KEY` from https://speedtest-tracker.dev/
    - Set any `HOMEPAGE_VAR_*` values referenced by `config/*.yaml`
+   - `HOMEPAGE_VAR_JELLYFIN_PORT` is set automatically from `../homelab-infra/registry.yaml` when starting via `./scripts/up.sh` (fallback `8096`)
    - Host ports are allocated in `../homelab-infra/registry.yaml` (do not override locally)
    - `./scripts/up.sh` exports `HOMEPAGE_ALLOWED_HOSTS` automatically (from registry DNS); optionally set `ADLER_IP` to also allow the LAN IP
 

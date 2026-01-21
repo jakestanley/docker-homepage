@@ -54,7 +54,7 @@
         description: Manage videos
         widget:
           type: jellyfin
-          url: http://{{HOMEPAGE_VAR_ADDRESS}}:8096
+          url: http://{{HOMEPAGE_VAR_ADDRESS}}:{{HOMEPAGE_VAR_JELLYFIN_PORT}}
           key: {{HOMEPAGE_VAR_JELLYFIN_API_KEY}}
           fields: ["movies"]
     - Bots:

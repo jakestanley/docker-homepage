@@ -25,6 +25,7 @@ services:
       PGID: $GID
       HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_ALLOWED_HOSTS:-home.stanley.arpa,home.stanley.arpa:443,localhost,127.0.0.1}"
       HOMEPAGE_VAR_SPEEDTEST_PORT: "${SPEEDTEST_HOST_PORT:-20016}"
+      HOMEPAGE_VAR_JELLYFIN_PORT: "${JELLYFIN_HOST_PORT:-8096}"
     ports:
       # Host port is allocated by homelab-infra/registry.yaml (services.homepage.upstream.port)
       - "${HOMEPAGE_HOST_PORT:-20017}:3000"
