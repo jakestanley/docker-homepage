@@ -9,7 +9,7 @@
         href: "http://speedtest.stanley.arpa/admin"
         widget:
           type: speedtest
-          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:8085"
+          url: "http://{{HOMEPAGE_VAR_ADDRESS}}:{{HOMEPAGE_VAR_SPEEDTEST_PORT}}"
     - Processes:
         widget:
           type: glances

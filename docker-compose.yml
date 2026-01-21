@@ -24,6 +24,7 @@ services:
       PUID: $PID
       PGID: $GID
       HOMEPAGE_ALLOWED_HOSTS: $HOMEPAGE_ALLOWED_HOSTS
+      HOMEPAGE_VAR_SPEEDTEST_PORT: "${SPEEDTEST_HOST_PORT:-20016}"
     ports:
       # Host port is allocated by homelab-infra/registry.yaml (services.homepage.upstream.port)
       - "${HOMEPAGE_HOST_PORT:-20017}:3000"

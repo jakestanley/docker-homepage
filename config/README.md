@@ -42,7 +42,7 @@ WIREGUARD_ADDRESSES="..."
 
 ## Quickstart: Speedtest
 
-- Navigate to http://adler.local:8085/admin
+- Navigate to http://adler.local:20016/admin
 - Log in with credentials. [Defaults](https://docs.speedtest-tracker.dev/security/authentication) are:
     - admin@example.com
     - password

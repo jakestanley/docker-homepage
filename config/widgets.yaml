@@ -49,28 +49,3 @@
     diskUnits: bbytes
     disk: 
       - /var/media
-
-
-      #- resources:
-      #    expanded: true
-      #    label: System
-      #    disk: 
-      #      - /mnt/ro_root
-
-      #- resources:
-      #    expanded: true
-      #    label: Home
-      #    disk: 
-      #- /mnt/ro_home
-
-        #- resources:
-        #    expanded: true
-        #    label: Media
-        #    disk: 
-        #      - /mnt/ro_media
-
-
-      #- speedtest:
-      #type: speedtest
-      #url: http://localhost:8085
-      #bitratePrecision: 3

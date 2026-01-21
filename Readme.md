@@ -59,7 +59,7 @@ bash ./scripts/verify.sh
 
 ## Speedtest Tracker Setup
 
-1. Navigate to http://localhost:8085/admin
+1. Navigate to http://localhost:20016/admin
 2. Login with default credentials:
    - Email: admin@example.com
    - Password: password
