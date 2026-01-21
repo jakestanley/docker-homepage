@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
+
 eval "$(./scripts/registry-homepage-env.sh)"
 
 adler_ip="${ADLER_IP:-10.92.8.6}"
@@ -13,4 +16,3 @@ echo
 echo "Public (nginx) checks:"
 curl -kI "https://${dns_name}/healthz"
 curl -kI "https://${dns_name}/"
-
