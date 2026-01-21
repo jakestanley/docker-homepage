@@ -23,15 +23,14 @@ This repository contains both the homepage configuration files and the Docker Co
 ## Setup
 
 1. Create a `.env` file with required environment variables
-2. Ensure `homepage.secrets` contains your API keys and tokens
-3. Run `./start.sh` or `docker-compose up -d`
+2. Run `../../scripts/up.sh`
 
 ### .env file
 
 Requires the following exports:
 ```
-# generate a key from https://speedtest-tracker.dev/
-SPEEDTEST_TRACK_APP_KEY="base64:abcdef..."
+# generate a key from https://speedtest-tracker.dev/ (set in ../../.env as APP_KEY)
+APP_KEY="base64:abcdef..."
 # wireguard gubbins
 WIREGUARD_PRIVATE_KEY="..."
 # these can be acquired from MullvadVPN's website. when you import or create 

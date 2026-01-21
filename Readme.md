@@ -22,13 +22,12 @@ Internal TLS is not exposed from these containers; the edge proxy (nginx) termin
 1. Copy example files:
    ```bash
    cp .env.example .env
-   cp homepage.secrets.example homepage.secrets
    ```
 
-2. Edit `.env` and `homepage.secrets` with your values:
-   - Generate speedtest app key from https://speedtest-tracker.dev/
-   - Add your API keys and credentials to homepage.secrets
-   - Keep `HOMEPAGE_HOST_PORT` aligned to `../homelab-infra/registry.yaml` (`services.homepage.upstream.port`)
+2. Edit `.env` with your values:
+   - Generate Speedtest Tracker `APP_KEY` from https://speedtest-tracker.dev/
+   - Set any `HOMEPAGE_VAR_*` values referenced by `config/*.yaml`
+   - Host ports are allocated in `../homelab-infra/registry.yaml` (do not override locally)
    - `./scripts/up.sh` exports `HOMEPAGE_ALLOWED_HOSTS` automatically (from registry DNS); optionally set `ADLER_IP` to also allow the LAN IP
 
 3. Start services:
