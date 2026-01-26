@@ -47,6 +47,8 @@
             - field: gpu_utilization
               label: GPU Util
               format: text
+          # suppress if for example, the PC is off
+          hideErrors: true
 
   - Services:
     - Qbittorrent:
