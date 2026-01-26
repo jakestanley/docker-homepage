@@ -28,6 +28,25 @@
           url: "http://{{HOMEPAGE_VAR_ADDRESS}}:61208"
           metric: info
           chart: true
+    - RTX:
+        widget:
+          type: customapi
+          url: https://rtx.stanley.arpa/health
+          refreshInterval: 30000
+          method: GET
+          mappings:
+            - field: status
+              label: Status
+              format: text
+            - field: temperature
+              label: Temp
+              format: text
+            - field: memory_available
+              label: Memory
+              format: text
+            - field: gpu_utilization
+              label: GPU Util
+              format: text
 
   - Services:
     - Qbittorrent:
