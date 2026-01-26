@@ -26,10 +26,18 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: "${HOMEPAGE_ALLOWED_HOSTS:-home.stanley.arpa,home.stanley.arpa:443,localhost,127.0.0.1}"
       HOMEPAGE_VAR_SPEEDTEST_PORT: "${SPEEDTEST_HOST_PORT:-20016}"
       HOMEPAGE_VAR_JELLYFIN_PORT: "${JELLYFIN_HOST_PORT:-8096}"
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/homelab-ca.crt
+      SSL_CERT_FILE: /etc/ssl/certs/homelab-ca.crt
     ports:
       # Host port is allocated by homelab-infra/registry.yaml (services.homepage.upstream.port)
       - "${HOMEPAGE_HOST_PORT:-20017}:3000"
     volumes:
       - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+      - /etc/homelab/certs/ca/ca.crt:/etc/ssl/certs/homelab-ca.crt:ro
     restart: unless-stopped
+    dns:
+      - 10.92.8.6
+      - 10.92.8.1
+    dns_search:
+      - stanley.arpa
