@@ -31,7 +31,7 @@
     - RTX:
         widget:
           type: customapi
-          url: https://rtx.stanley.arpa/health
+          url: https://rtx.stanley.arpa/api
           refreshInterval: 30000
           method: GET
           mappings:
