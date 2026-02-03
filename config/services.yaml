@@ -29,6 +29,7 @@
           metric: info
           chart: true
     - RTX:
+        href: "https://rtx.stanley.arpa"
         widget:
           type: customapi
           url: https://rtx.stanley.arpa/api
