@@ -13,7 +13,10 @@
 
 - glances:
     # sudo apt-get install glances
-    # /usr/bin/glances -w in systemd unit
+    # Override /lib/systemd/system/glances.service via /etc/systemd/system/glances.service.d/override.conf:
+    #   [Service]
+    #   ExecStart=
+    #   ExecStart=/usr/bin/glances -w -B 10.92.8.6
     url: http://{{HOMEPAGE_VAR_ADDRESS}}:61208
     label: System
     cpu: false
@@ -25,8 +28,7 @@
       - /
 
 - glances:
-    # sudo apt-get install glances
-    # /usr/bin/glances -w in systemd unit
+    # See System glances widget above for setup notes
     url: http://{{HOMEPAGE_VAR_ADDRESS}}:61208
     label: Home
     cpu: false
@@ -38,8 +40,7 @@
       - /home
 
 - glances:
-    # sudo apt-get install glances
-    # /usr/bin/glances -w in systemd unit
+    # See System glances widget above for setup notes
     url: http://{{HOMEPAGE_VAR_ADDRESS}}:61208
     label: Media
     cpu: false
