@@ -11,7 +11,7 @@ layout:
   Row 1:
     header: false
     style: row
-    columns: 3
+    columns: 4
   Control Panels:
     style: row
     columns: 3
