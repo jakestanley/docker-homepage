@@ -2,6 +2,25 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
+- Home:
+  - Apollo:
+      widget:
+        type: customapi
+        url: "https://metrics.stanley.arpa/query?db=climate&u=read&p={{HOMEPAGE_VAR_APOLLO_INFLUX_TOKEN}}&q=SELECT+last%28temperature%29+FROM+climate+WHERE+location%3D%27inside%27+AND+sensor%3D%27apollo1%27%3BSELECT+last%28temperature%29+FROM+climate+WHERE+location%3D%27outside%27"
+        refreshInterval: 60000
+        method: GET
+        mappings:
+          - field: results.0.series.0.values.0.1
+            label: Inside
+            format: float
+            rounding: 1
+            suffix: "°C"
+          - field: results.1.series.0.values.0.1
+            label: Outside
+            format: float
+            rounding: 1
+            suffix: "°C"
+
 - Row 1:
   - System Health:
     - Speedtest:
