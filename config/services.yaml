@@ -150,6 +150,9 @@
       icon: portainer.png
       description: GUI for Docker containers
       href: "https://portainer.stanley.arpa"
+  - Arcade:
+      href: "https://arcade.stanley.arpa"
+      description: Start/stop game servers across hosts
   - UpSnap:
       icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
       href: https://upsnap.stanley.arpa
