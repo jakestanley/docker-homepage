@@ -19,3 +19,7 @@ widget:
   type: customapi
   url: "https://example.com/api?token={{HOMEPAGE_VAR_MY_TOKEN}}"
 ```
+
+### Tailscale widget API key expiry
+
+`HOMEPAGE_VAR_TAILSCALE_KEY` is a Tailscale API access token, which expires after at most 90 days (Tailscale's own hard cap, chosen at creation time — not configurable past that). The widget fails silently, not loudly, once it expires. Regenerate at https://login.tailscale.com/admin/settings/keys and update `.env`, then recreate the `homepage` container (see above — a restart won't pick it up).
