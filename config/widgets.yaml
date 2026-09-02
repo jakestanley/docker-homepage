@@ -48,5 +48,21 @@
     expanded: true
     target: _blank
     diskUnits: bbytes
-    disk: 
+    disk:
       - /var/media
+
+- glances:
+    # See System glances widget above for setup notes.
+    # Docker's data-root as of the 2026-08-28 disk migration -- a 300GB
+    # partition (/dev/sdc1) dedicated to /var/lib/docker's contents, not
+    # the full 1TB disk (headroom for a possible future move to a smaller
+    # drive).
+    url: http://{{HOMEPAGE_VAR_ADDRESS}}:61208
+    label: Docker
+    cpu: false
+    mem: false
+    expanded: true
+    target: _blank
+    diskUnits: bbytes
+    disk:
+      - /mnt/docker-data
