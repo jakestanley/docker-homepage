@@ -108,30 +108,20 @@
               format: text
 
   - Game Servers:
-    # Currently broken
-    #    - CS2:
-    #        icon: https://icon-library.com/images/counter-strike-icon/counter-strike-icon-24.jpg
-    #        widget:
-    #          type: gamedig
-    #          serverType: counterstrike2 # see https://github.com/gamedig/node-gamedig/blob/master/GAMES_LIST.md
-    #          url: "udp://{{HOMEPAGE_VAR_ADDRESS}}:27015"
-    #          socketTimeout: 10000
-
-    - Minecraft:
-        icon: https://upload.wikimedia.org/wikipedia/commons/9/91/Logo_Minecraft.png
-        href: https://minecraft.stanley.arpa
+    - Arcade:
+        href: "https://arcade.stanley.arpa"
+        description: Every registered game server, live from the portal itself
         widget:
-          type: gamedig
-          serverType: minecraft
-          url: "udp://minecraft.stanley.arpa:25565"
-          fields: ["players", "status", "ping"]
-            #    - "Insurgency: Sandstorm":
-            #        widget:
-            #          type: gamedig
-            #          serverType: insurgencysandstorm
-            #          url: "udp://{{HOMEPAGE_VAR_ADDRESS}}:27013"
-            #
-            #
+          type: customapi
+          url: https://arcade.stanley.arpa/api/servers
+          refreshInterval: 10000
+          method: GET
+          display: dynamic-list
+          mappings:
+            name: name
+            label: status
+            format: text
+            target: "https://arcade.stanley.arpa"
 
   - Home:
     - Apollo:
@@ -157,9 +147,9 @@
       icon: portainer.png
       description: GUI for Docker containers
       href: "https://portainer.stanley.arpa"
-  - Arcade:
-      href: "https://arcade.stanley.arpa"
-      description: Start/stop game servers across hosts
+  # - Arcade:
+  #     href: "https://arcade.stanley.arpa"
+  #     description: Start/stop game servers across hosts
   - UpSnap:
       icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Go_gopher_favicon.svg/1280px-Go_gopher_favicon.svg.png
       href: https://upsnap.stanley.arpa
