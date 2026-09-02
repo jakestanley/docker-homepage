@@ -10,6 +10,13 @@
         widget:
           type: speedtest
           url: "https://speedtest.stanley.arpa/"
+    - Tailscale:
+        icon: tailscale.png
+        href: "https://login.tailscale.com/admin/machines"
+        widget:
+          type: tailscale
+          deviceid: {{HOMEPAGE_VAR_TAILSCALE_DEVICEID}}
+          key: {{HOMEPAGE_VAR_TAILSCALE_KEY}}
     - Processes:
         widget:
           type: glances
