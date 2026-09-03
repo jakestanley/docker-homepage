@@ -33,7 +33,6 @@ services:
       - "${HOMEPAGE_HOST_PORT:-20017}:3000"
     volumes:
       - ./config:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
       - /etc/homelab/certs/ca/ca.crt:/etc/ssl/certs/homelab-ca.crt:ro
     restart: unless-stopped
     dns:
