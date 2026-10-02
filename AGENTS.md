@@ -10,15 +10,37 @@
 docker compose up -d homepage
 ```
 
-### Variable substitution in customapi widgets
+### Credentialed customapi widgets: use username/password, not query params
 
-`{{HOMEPAGE_VAR_*}}` substitution does NOT work inside the `headers` field of a `customapi` widget. Pass credentials as URL query parameters instead:
+Prefer `username`/`password` over embedding a credential in the URL — Homepage
+builds a real `Authorization: Basic` header server-side from these two
+fields, so the credential never appears in the request line that nginx (or
+any upstream) access-logs:
 
 ```yaml
 widget:
   type: customapi
-  url: "https://example.com/api?token={{HOMEPAGE_VAR_MY_TOKEN}}"
+  url: "https://example.com/api"
+  username: someuser
+  password: "{{HOMEPAGE_VAR_MY_TOKEN}}"
 ```
+
+`{{HOMEPAGE_VAR_*}}` substitution is a blind find-replace over the whole raw
+YAML file before parsing (confirmed in Homepage's own source,
+`utils/config/config.js`'s `substituteEnvironmentVars`), so it isn't
+field-specific — it works in `username`/`password` exactly like it does in
+`url` (confirmed live: `homelab-infra`'s Apollo widget, 2026-10-02). An
+earlier version of this note claimed substitution doesn't work in `headers`
+specifically and recommended query params instead — that was never retested
+against `username`/`password`, and in hindsight was more likely a YAML
+quoting mistake (`{{...}}` unquoted is flow-mapping syntax to a YAML parser)
+than a real substitution gap. If you do need raw `headers:`, quote the
+value and verify with `curl -H "Host: <allowed host>"
+"http://127.0.0.1:<port>/api/services/proxy?group=<group>&service=<service>&index=<n>"`
+rather than assuming — this is the actual server-side proxy route Homepage
+uses for `customapi` widgets (not `/api/widgets/customapi`, which doesn't
+exist as a route; that path is reserved for a fixed set of built-in widget
+types like `glances`/`weather`/etc.).
 
 ### Tailscale widget API key expiry
 
