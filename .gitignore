@@ -2,3 +2,4 @@
 *.backup
 *.secrets
 data
+config/bookmarks.yaml

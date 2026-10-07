@@ -64,3 +64,22 @@ bash ./scripts/verify.sh
    - Email: admin@example.com
    - Password: password
 3. Change default credentials immediately
+
+## Homelab bookmarks (generated)
+
+`config/bookmarks.yaml` is **generated** (git-ignored) - every service in
+`../homelab-infra/registry.yaml` with a `dns` name becomes a link in the
+"Homelab" bookmarks group. Hand-written bookmarks go in
+`config/bookmarks.static.yaml` and are appended after it.
+
+- Job: `jobs/bookmarks-sync` (Docker, no network), run via
+  `./scripts/sync-bookmarks.sh`, which first fast-forwards
+  `../homelab-infra` (skipped with a warning if it's dirty).
+- Schedule: `./scripts/up.sh` runs the sync once and (re)installs a cron
+  line tagged `# homelab-homepage-bookmarks` (default `17 3 * * *`,
+  override with `CRON_SCHEDULE`). Idempotent.
+- Logs: `data/logs/bookmarks-sync.log`.
+- Manual: `./scripts/sync-bookmarks.sh`, or preview with
+  `DRY_RUN=true docker compose --profile jobs run --rm bookmarks-sync`.
+- Leave services out with `BOOKMARKS_EXCLUDE=key1,key2` in `.env`.
+- Homepage reloads the file live; no restart needed.

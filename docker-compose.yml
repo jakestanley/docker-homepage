@@ -40,3 +40,18 @@ services:
       - 10.92.8.1
     dns_search:
       - stanley.arpa
+
+  # Scheduled job, not a service: regenerates config/bookmarks.yaml from the
+  # registry. Run via scripts/sync-bookmarks.sh (cron, installed by up.sh).
+  bookmarks-sync:
+    profiles: ["jobs"]
+    build:
+      context: jobs/bookmarks-sync
+    network_mode: none
+    user: "${PID:-1000}:${GID:-1000}"
+    environment:
+      BOOKMARKS_EXCLUDE: "${BOOKMARKS_EXCLUDE:-}"
+      DRY_RUN: "${DRY_RUN:-false}"
+    volumes:
+      - ${REGISTRY_PATH:-../homelab-infra/registry.yaml}:/registry.yaml:ro
+      - ./config:/config

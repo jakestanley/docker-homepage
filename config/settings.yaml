@@ -16,6 +16,11 @@ layout:
     style: row
     columns: 3
 
+  # Generated from the registry by jobs/bookmarks-sync.
+  Homelab:
+    style: row
+    columns: 6
+
   Resources:
     style: row
     columns: 2
