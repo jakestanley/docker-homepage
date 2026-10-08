@@ -36,10 +36,10 @@
           metric: info
           chart: true
     - RTX:
-        href: "https://rtx.stanley.arpa"
+        href: "https://rogues.stanley.arpa"
         widget:
           type: customapi
-          url: https://rtx.stanley.arpa/api
+          url: https://rogues.stanley.arpa/api/gpu/shrike
           refreshInterval: 30000
           method: GET
           mappings:
